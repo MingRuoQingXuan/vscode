@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="" />
+    <script src="./js/vue.js"></script>
+  </head>
+  <body>
+    <!--[if lt IE 7]>
+      <p class="browsehappy">
+        You are using an <strong>outdated</strong> browser. Please
+        <a href="#">upgrade your browser</a> to improve your experience.
+      </p>
+    <![endif]-->
+    <div id="root">
+      <h1>挂载点 模板 实例 ,数据 事件 方法</h1> 
+      <div v-html="content"></div>
+      <div v-text="content"></div>
+      <div>{{content}}</div>
+      <div v-text="msg" v-on:click="handleclick" ></div>
+      <div v-text="msg" @click="handleclick" ></div>
+
+      <h1> 属性绑定 和 双向数据绑定 </h1>
+      <h2> 属性绑定的值为 js表达式  </h2>
+      <div v-bind:title=" 'this ' + title" >{{title}}</div>
+      <div :title=" 'this ' + title" >{{title}}</div>
+      <input type="text" v-model="title"/>
+
+      <h1> 计算属性 和 侦听器 </h1>
+      <br>
+      姓: <input v-model="firstname" type="text">
+      名: <input v-model="secordname" type="text">
+      <div>{{fullname}}</div>
+      <div>{{count}}</div>
+
+      <h1> v-if ,v-show , v-for </h1>
+      <br>
+      <!-- 元素删除和新增 -->
+      <div v-if="show">hello world</div>
+      <!-- 元素隐藏和显示 -->
+      <div v-show="show">hello world2</div>
+      <button @click="changeclick">change</button>
+      <ul>
+        <!-- key 为索引,每次不同 -->
+        <li v-for="(item,index) of list" :key="index">{{item}}</li>
+      </ul>
+    </div>
+
+    <script>
+      new Vue({
+            el:'#root',
+            data: {
+                msg: "hello world",
+                content :"<h1 >hello world</h1>",
+                title : "hello world",
+                firstname:"",
+                secordname:"",
+                count:0,
+                show:true,
+                list:[1,2,3]
+            },
+            methods: {
+              handleclick : function () {
+                this.content = "just gg";
+              },
+              changeclick : function () {
+                this.show = !this.show;
+              }
+            },
+            computed:{
+              fullname:function () {
+                return this.firstname +' '+ this.secordname
+              }
+            },
+            watch:{
+              firstname : function () {
+                this.count++;
+              },
+              secordname : function () {
+                this.count++;
+              },
+              fullname : function () {
+                this.count++;
+              }
+            }
+      });
+    </script>
+    <script src="" async defer></script>
+  </body>
+</html>
